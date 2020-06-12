@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import './Header.sass';
 
-export default class Header extends Component {
-    render() {
-        return (
-            <Header className="header">
-                123
-            </Header>
-        )
-    }
+export default function Header() {
+    return (
+        <div className="header">
+            <div className="links">
+                <NavLink to="/">Home</NavLink>
+            </div>
+        </div>
+    )
 }
