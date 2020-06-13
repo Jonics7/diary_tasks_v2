@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './AddProject.sass';
 import './NeonButton.sass';
@@ -12,6 +12,7 @@ Modal.setAppElement('#root');
 
 export default function AddProject() {
     const [modalIsOpen, setModalIsOpen] = useState(false)
+
     return (
         <div className="add-project">
             <button
@@ -86,6 +87,16 @@ export default function AddProject() {
                                 <option value="game">Game</option>
                                 <option value="script">Script</option>
                                 <option value="another">Another</option>
+                            </Field>
+                            <Field
+                                name="language"
+                                component="select"
+                                className="language-input input"
+                            >
+                                <option value="web">Python</option>
+                                <option value="game">JS</option>
+                                <option value="script">C++</option>
+                                <option value="another">CSS</option>
                             </Field>
                             <NeonButton />
                         </form>
