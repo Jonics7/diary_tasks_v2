@@ -45,7 +45,6 @@ class LanguageListView(APIView):
 
 class ProjectWebListView(APIView):
 
-
     def get(self, request):
         projects = Project.objects.filter(category_id=1)
         serializer = ProjectListSerializer(projects, many=True)
@@ -54,14 +53,12 @@ class ProjectWebListView(APIView):
 
 class ProjectAnotherListView(APIView):
 
-
     def get(self, request):
         projects = Project.objects.filter(category_id=4)
         serializer = ProjectListSerializer(projects, many=True)
         return Response(serializer.data)
 
 class ProjectGameListView(APIView):
-
 
     def get(self, request):
         projects = Project.objects.filter(category_id=2)
@@ -71,10 +68,16 @@ class ProjectGameListView(APIView):
 
 class ProjectScriptsListView(APIView):
 
-
     def get(self, request):
         projects = Project.objects.filter(category_id=3)
         serializer = ProjectListSerializer(projects, many=True)
         return Response(serializer.data)
 
+
+class ProjectDetailView(APIView):
+
+    def get(self, request, pk):
+        project = Project.objects.get(id=pk)
+        serializer = ProjectListSerializer(project)
+        return Response(serializer.data)
 

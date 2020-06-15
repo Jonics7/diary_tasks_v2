@@ -3,6 +3,7 @@ import Header from './Components/Header';
 import './App.sass'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './Pages/Home/Home';
+import Detail from './Pages/Detail/Detail';
 
 
 function App() {
@@ -10,17 +11,17 @@ function App() {
     <Router>
       <div className="wrapper">
         <Header />
-        <Home />
 
         <Switch>
 
-          <Route path="/">
+          <Route exact path="/">
             <Home />
           </Route>
 
-          <Route path="project/">
-            
-          </Route>
+          <Route
+            render = { props => <Detail {...props} /> }
+            path="/project/:id" />
+
 
         </Switch>
 
