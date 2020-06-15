@@ -10,7 +10,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ("title", "category", "language")
+        fields = '__all__'
 
 
 class AddProjectSerializer(serializers.ModelSerializer):

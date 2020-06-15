@@ -4,14 +4,55 @@ import './AddProject.sass';
 import './NeonButton.sass';
 import './AddProjectForm.sass';
 import { Form, Field } from 'react-final-form';
-import NeonButton from './NeonButton';
 
 Modal.setAppElement('#root');
 
-
-
 export default function AddProject() {
+
     const [modalIsOpen, setModalIsOpen] = useState(false)
+
+    const [title, setTitle] = useState("");
+    const [task, setTask] = useState("");
+    const [catId, setCategory] = useState("");
+    const [langId, setLanguage] = useState("");
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const getCategories = async () => {
+            const response = await fetch("http://127.0.0.1:8000/api/v1/categories/");
+            const jsonResponse = await response.json();
+            console.log(jsonResponse);
+            setCategories(jsonResponse)
+        };
+        getCategories();
+    }, []);
+
+    const [languages, setLanguages] = useState([]);
+
+    useEffect(() => {
+        const getLanguages = async () => {
+            const response = await fetch("http://127.0.0.1:8000/api/v1/languages/");
+            const jsonResponse = await response.json();
+            console.log(jsonResponse);
+            setLanguages(jsonResponse)
+        };
+        getLanguages();
+    }, []);
+
+    const sendForm = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "title": title,
+                "task": task,
+                "category": catId,
+                "language": langId,
+            })
+        };
+        fetch('http://127.0.0.1:8000/api/v1/add-project/', requestOptions);
+    }
 
     return (
         <div className="add-project">
@@ -23,7 +64,7 @@ export default function AddProject() {
                 <span className="button-line button-line-bottom"></span>
                 <span className="button-line button-line-left"></span>
                     Add New Project
-                </button>
+            </button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
@@ -63,15 +104,20 @@ export default function AddProject() {
                     {({ handleSubmit }) => (
                         <form
                             className="add-project-form"
-                            onSubmit={handleSubmit}>
-                            <Field
+                            //  
+                            >
+                            <Field  
                                 name="name"
                                 component="input"
                                 type="text"
                                 placeholder="Project Name"
                                 className="name-input input"
+                                onChange={e => setTitle(e.target.value)}
+                                defaultValue={title}
                             />
                             <Field
+                                onChange={e => setTask(e.target.value)}
+                                defaultValue={task}
                                 name="description"
                                 component="input"
                                 type="text"
@@ -79,26 +125,44 @@ export default function AddProject() {
                                 className="description-input input"
                             />
                             <Field
+                                onChange={e => setCategory(e.target.value)}
+                                defaultValue={catId}
                                 name="category"
                                 component="select"
                                 className="category-input input"
                             >
-                                <option value="web">Web project</option>
-                                <option value="game">Game</option>
-                                <option value="script">Script</option>
-                                <option value="another">Another</option>
+                                <option>Select category</option>
+                                {
+                                categories.map((category, index) => {
+                                    return <option value={category.id} key={index}>{category.title}</option>
+                                    })
+                                }
                             </Field>
                             <Field
+                                onChange={e => setLanguage(e.target.value)}
+                                defaultValue={langId}
                                 name="language"
                                 component="select"
                                 className="language-input input"
                             >
-                                <option value="web">Python</option>
-                                <option value="game">JS</option>
-                                <option value="script">C++</option>
-                                <option value="another">CSS</option>
+                                <option>Select language</option>
+                                {
+                                languages.map((languages, index) => {
+                                    return <option value={languages.id} key={index}>{languages.name}</option>
+                                    })
+                                }
                             </Field>
-                            <NeonButton />
+                            <button
+                                className="add-neon"
+                                // onClick={() => setModalIsOpen(true)}
+                                onClick = {sendForm}
+                                >
+                                <span className="button-line button-line-top"></span>
+                                <span className="button-line button-line-right"></span>
+                                <span className="button-line button-line-bottom"></span>
+                                <span className="button-line button-line-left"></span>
+                    Add New Project
+                            </button>
                         </form>
                     )}
                 </Form>

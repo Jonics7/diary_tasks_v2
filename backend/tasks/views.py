@@ -9,7 +9,7 @@ class ProjectListView(APIView):
     """Вывод списка проектов"""
 
     def get(self, request):
-        projects = Project.objects.all()
+        projects = Project.objects.order_by('-pub_date')
         serializer = ProjectListSerializer(projects, many=True)
         return Response(serializer.data)
 
