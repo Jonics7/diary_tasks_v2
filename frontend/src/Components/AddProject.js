@@ -12,7 +12,7 @@ export default function AddProject() {
     const [modalIsOpen, setModalIsOpen] = useState(false)
 
     const [title, setTitle] = useState("");
-    const [task, setTask] = useState("");
+    const [description, setDescription] = useState("");
     const [catId, setCategory] = useState("");
     const [langId, setLanguage] = useState("");
 
@@ -46,7 +46,7 @@ export default function AddProject() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 "title": title,
-                "task": task,
+                "description": description,
                 "category": catId,
                 "language": langId,
             })
@@ -116,8 +116,8 @@ export default function AddProject() {
                                 defaultValue={title}
                             />
                             <Field
-                                onChange={e => setTask(e.target.value)}
-                                defaultValue={task}
+                                onChange={e => setDescription(e.target.value)}
+                                defaultValue={description}
                                 name="description"
                                 component="input"
                                 type="text"
@@ -161,7 +161,7 @@ export default function AddProject() {
                                 <span className="button-line button-line-right"></span>
                                 <span className="button-line button-line-bottom"></span>
                                 <span className="button-line button-line-left"></span>
-                    Add New Project
+                                Add New Project
                             </button>
                         </form>
                     )}

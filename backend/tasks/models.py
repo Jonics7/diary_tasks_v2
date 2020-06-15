@@ -33,6 +33,7 @@ class Project(models.Model):
     """Класс проекта"""
     title = models.CharField('Название проекта', max_length=150)
     task = models.TextField('Техническое задание', blank=True)
+    description = models.CharField('Описание проекта', max_length=150, blank=True)
     pub_date = models.DateTimeField('Дата публикации', null=True, auto_now_add=True, auto_now=False)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL, null=True)
     upload = models.FileField('Готовый проект', upload_to='CompletedProjects/', blank=True,)
