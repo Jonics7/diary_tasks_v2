@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Project, Category, Language
-from .serializers import ProjectListSerializer, AddProjectSerializer, LanguageListSerializer, CategoryListSerializer
+from .serializers import ProjectListSerializer, AddProjectSerializer, LanguageListSerializer, CategoryListSerializer, AddTaskSerializer
 
 
 class ProjectListView(APIView):
@@ -21,6 +21,17 @@ class AddProjectView(APIView):
         add_project = AddProjectSerializer(data=request.data)
         if add_project.is_valid():
             add_project.save()
+            return Response(status=201)
+        return Response(status=400)
+
+
+class AddTaskView(APIView):
+    """Add task"""
+
+    def post(self, request):
+        add_task = AddTaskSerializer(data=request.data)
+        if add_task.is_valid():
+            add_task.save()
             return Response(status=201)
         return Response(status=400)
 
@@ -80,4 +91,5 @@ class ProjectDetailView(APIView):
         project = Project.objects.get(id=pk)
         serializer = ProjectListSerializer(project)
         return Response(serializer.data)
+
 

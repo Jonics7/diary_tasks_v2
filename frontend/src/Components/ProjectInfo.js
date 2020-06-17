@@ -48,7 +48,6 @@ export default function ProjectInfo(props) {
                         // onChange={e => setTitle(e.target.value)}
                         // defaultValue={title}
                         />
-                        <br/>
                         <button
                             className="add-neon upload-file-button"
                         >

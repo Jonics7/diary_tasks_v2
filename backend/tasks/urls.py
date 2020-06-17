@@ -13,4 +13,5 @@ urlpatterns = [
     path('languages/', views.LanguageListView.as_view()),
     path('categories/', views.CategoryListView.as_view()),
     path('add-project/', views.AddProjectView.as_view()),
+    path('add-task/', views.AddTaskView.as_view()),
 ]

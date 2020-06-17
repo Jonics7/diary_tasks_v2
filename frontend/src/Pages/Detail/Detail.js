@@ -11,7 +11,7 @@ export default function Detail({match}) {
     return (
         <div className="detail">
             {/* <h1>{match.params.id}</h1> */}
-            <Tasks/>
+            <Tasks urlID = {urlID} />
             <ProjectInfo urlID = {urlID} />
         </div>
     )
