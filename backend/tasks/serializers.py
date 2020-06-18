@@ -1,11 +1,20 @@
 from rest_framework import serializers
 
-from .models import Project, Category, Language, TechTask
+from .models import Project, Category, Language, Task
+
+class AddTaskSerializer(serializers.ModelSerializer):
+    """Serializer for POST request(Add Task)"""
+
+    class Meta:
+        model = Task
+        fields = ("task", "project", "complited", "id", )
+
 
 class ProjectListSerializer(serializers.ModelSerializer):
     """Project List"""
     category = serializers.SlugRelatedField(slug_field="title", read_only=True)
     language = serializers.SlugRelatedField(slug_field="name", read_only=True)
+    tasks = AddTaskSerializer(many=True)
 
 
     class Meta:
@@ -22,12 +31,21 @@ class AddProjectSerializer(serializers.ModelSerializer):
         exclude = ('upload', )
 
 
-class AddTaskSerializer(serializers.ModelSerializer):
-    """Serializer for POST request(Add Task)"""
+class TaskListSerializer(serializers.ModelSerializer):
+    """Serializer for POST request(Add Project)"""
+
 
     class Meta:
-        model = TechTask
-        fields = ("name", )
+        model = Task
+        fields = '__all__'
+
+
+class TaskUpdateSerializer(serializers.ModelSerializer):
+    """Serializer for POST request(Add Project)"""
+
+    class Meta:
+        model = Task
+        fields = ("complited", "id", )
 
 
 class CategoryListSerializer(serializers.ModelSerializer):

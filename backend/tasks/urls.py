@@ -14,4 +14,6 @@ urlpatterns = [
     path('categories/', views.CategoryListView.as_view()),
     path('add-project/', views.AddProjectView.as_view()),
     path('add-task/', views.AddTaskView.as_view()),
+    path('update-task/', views.TaskUpdateView.as_view()),
+    path('tasks/', views.TaskListView.as_view()),
 ]

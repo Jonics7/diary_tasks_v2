@@ -29,23 +29,9 @@ class Language(models.Model):
         verbose_name_plural = 'Используемые языки'
 
 
-class TechTask(models.Model):
-    """Класс ТЗ"""
-    name = models.CharField('Техническое задание', max_length=150)
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.name
-
-
-    class Meta:
-        verbose_name = 'Техническое задание'
-        verbose_name_plural = 'Технические задания'
-
 class Project(models.Model):
     """Класс проекта"""
     title = models.CharField('Название проекта', max_length=150)
-    task =  models.ForeignKey(TechTask, verbose_name='Техническое задание', on_delete=models.SET_NULL, null=True)
     description = models.CharField('Описание проекта', max_length=150, blank=True)
     pub_date = models.DateTimeField('Дата публикации', null=True, auto_now_add=True, auto_now=False)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL, null=True)
@@ -61,3 +47,18 @@ class Project(models.Model):
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
         ordering = ['category']
+
+
+class Task(models.Model):
+    task = models.CharField('Техническое задание', max_length=150)
+    project = models.ForeignKey(Project, verbose_name='Проект', on_delete=models.SET_NULL, null=True, related_name="tasks")
+    complited = models.BooleanField('Статус выполнения', default=False)
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.task
+
+
+    class Meta:
+        verbose_name = 'Техническое задание'
+        verbose_name_plural = 'Технические задания'

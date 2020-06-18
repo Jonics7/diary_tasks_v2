@@ -1,8 +1,15 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Project, Category, Language
-from .serializers import ProjectListSerializer, AddProjectSerializer, LanguageListSerializer, CategoryListSerializer, AddTaskSerializer
+from .models import Project, Category, Language, Task
+from .serializers import (ProjectListSerializer,
+                            AddProjectSerializer,
+                            LanguageListSerializer,
+                            CategoryListSerializer,
+                            AddTaskSerializer,
+                            TaskListSerializer,
+                            TaskUpdateSerializer
+                            )
 
 
 class ProjectListView(APIView):
@@ -12,6 +19,22 @@ class ProjectListView(APIView):
         projects = Project.objects.order_by('-pub_date')
         serializer = ProjectListSerializer(projects, many=True)
         return Response(serializer.data)
+
+
+class TaskListView(APIView):
+    """Вывод списка заданий"""
+
+    def get(self, request):
+        tasks = Task.objects.all()
+        serializer = TaskListSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+
+
+class TaskUpdateView(APIView):
+    """UpdateTask"""
+    # def update(self, instanse, request):
+
 
 
 class AddProjectView(APIView):

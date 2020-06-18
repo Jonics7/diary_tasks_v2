@@ -17,7 +17,6 @@ export default function Tasks(props) {
     }, []);
 
     const [task, setTask] = useState([]);
-    const [id, setID] = useState(props.urlID);
 
     const sendForm = () => {
         const requestOptions = {
@@ -25,22 +24,64 @@ export default function Tasks(props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 "task": task,
-                "id": id
+                "project": project.id
             })
         };
         fetch('http://127.0.0.1:8000/api/v1/add-task/', requestOptions);
     }
 
+    // const [projectTask, setprojectTask] = useState([]);
+
+    // useEffect(() => {
+    //     const getprojectTask = async () => {
+    //         const response = await fetch("http://127.0.0.1:8000/api/v1/tasks/");
+    //         const jsonResponse = await response.json();
+    //         console.log(jsonResponse);
+    //         setprojectTask(jsonResponse)
+    //     };
+    //     getprojectTask();
+    // }, []);
+
+    const [complited, setcomplited] = useState([]);
+
+    
+    const taskUpdateForm = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "comlited": complited,
+                "id": project.tasks.id
+            })
+        };
+        fetch('http://127.0.0.1:8000/api/v1/update-task/', requestOptions);
+    }
+
     return (
         <div className="tasks">
 
-            <ul>
-                {
-                    project.map((project, index) => {
-                        return <li key={`${index} `}>{project.task}</li>
-                    })
-                }
-            </ul>
+            
+
+            {/* {
+                project.tasks.map((task, index) => {
+                    return  <div>
+                                <label
+                                    key={`${index} `}
+                                    for={task.id}
+                                >
+                                    {task.task}
+                                </label>
+                                <input
+                                    type="checkbox"
+                                    id={task.id}
+                                    defaultChecked={task.complited}
+                                    // onChange={e => setTask(e.target.checked)}
+                                    // onClick={taskUpdateForm}
+                                />
+                            </div>
+                })
+            } */}
+
 
             <Form onSubmit={() => { }}>
                 {({ handleSubmit }) => (
@@ -58,7 +99,7 @@ export default function Tasks(props) {
                         />
                         <button
                             className="add-task"
-                            onClick = {sendForm}
+                            onClick={sendForm}
                         >
                             ADD NEW TASK
                         </button>
