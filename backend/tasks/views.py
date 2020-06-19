@@ -1,118 +1,55 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import viewsets
 
 from .models import Project, Category, Language, Task
 from .serializers import (ProjectListSerializer,
                             AddProjectSerializer,
                             LanguageListSerializer,
                             CategoryListSerializer,
-                            AddTaskSerializer,
-                            TaskListSerializer,
-                            TaskUpdateSerializer
+                            TaskSerializer
                             )
 
 
-class ProjectListView(APIView):
-    """Вывод списка проектов"""
-
-    def get(self, request):
-        projects = Project.objects.order_by('-pub_date')
-        serializer = ProjectListSerializer(projects, many=True)
-        return Response(serializer.data)
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.order_by('-pub_date')
+    serializer_class = ProjectListSerializer
 
 
-class TaskListView(APIView):
-    """Вывод списка заданий"""
-
-    def get(self, request):
-        tasks = Task.objects.all()
-        serializer = TaskListSerializer(tasks, many=True)
-        return Response(serializer.data)
+class AddProjectViewSet(viewsets.ModelViewSet):
+    serializer_class =  AddProjectSerializer
 
 
-
-class TaskUpdateView(APIView):
-    """UpdateTask"""
-    # def update(self, instanse, request):
-
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class =  TaskSerializer
 
 
-class AddProjectView(APIView):
-    """Add project"""
-
-    def post(self, request):
-        add_project = AddProjectSerializer(data=request.data)
-        if add_project.is_valid():
-            add_project.save()
-            return Response(status=201)
-        return Response(status=400)
+class CategoryListViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class =  CategoryListSerializer
 
 
-class AddTaskView(APIView):
-    """Add task"""
-
-    def post(self, request):
-        add_task = AddTaskSerializer(data=request.data)
-        if add_task.is_valid():
-            add_task.save()
-            return Response(status=201)
-        return Response(status=400)
+class LanguageListViewSet(viewsets.ModelViewSet):
+    queryset = Language.objects.all()
+    serializer_class = LanguageListSerializer
 
 
-class CategoryListView(APIView):
-    """Вывод списка категорий"""
-
-    def get(self, request):
-        categories = Category.objects.all()
-        serializer = CategoryListSerializer(categories, many=True)
-        return Response(serializer.data)
+class ProjectWebListViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.filter(category_id=1)
+    serializer_class = ProjectListSerializer
 
 
-class LanguageListView(APIView):
-    """Вывод списка языков"""
-
-    def get(self, request):
-        languages = Language.objects.all()
-        serializer = LanguageListSerializer(languages, many=True)
-        return Response(serializer.data)
+class ProjectGameListViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.filter(category_id=2)
+    serializer_class = ProjectListSerializer
 
 
-class ProjectWebListView(APIView):
-
-    def get(self, request):
-        projects = Project.objects.filter(category_id=1)
-        serializer = ProjectListSerializer(projects, many=True)
-        return Response(serializer.data)
+class ProjectScriptsListViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.filter(category_id=3)
+    serializer_class = ProjectListSerializer
 
 
-class ProjectAnotherListView(APIView):
-
-    def get(self, request):
-        projects = Project.objects.filter(category_id=4)
-        serializer = ProjectListSerializer(projects, many=True)
-        return Response(serializer.data)
-
-class ProjectGameListView(APIView):
-
-    def get(self, request):
-        projects = Project.objects.filter(category_id=2)
-        serializer = ProjectListSerializer(projects, many=True)
-        return Response(serializer.data)
-
-
-class ProjectScriptsListView(APIView):
-
-    def get(self, request):
-        projects = Project.objects.filter(category_id=3)
-        serializer = ProjectListSerializer(projects, many=True)
-        return Response(serializer.data)
-
-
-class ProjectDetailView(APIView):
-
-    def get(self, request, pk):
-        project = Project.objects.get(id=pk)
-        serializer = ProjectListSerializer(project)
-        return Response(serializer.data)
-
-
+class ProjectAnotherListViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.filter(category_id=4)
+    serializer_class = ProjectListSerializer

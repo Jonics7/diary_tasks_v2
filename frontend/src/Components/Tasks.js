@@ -8,7 +8,7 @@ export default function Tasks(props) {
 
     useEffect(() => {
         const getProject = async () => {
-            const response = await fetch("http://127.0.0.1:8000/api/v1/project/" + props.urlID);
+            const response = await fetch("http://127.0.0.1:8000/api/v1/projects/" + props.urlID);
             const jsonResponse = await response.json();
             console.log(jsonResponse);
             setProject(jsonResponse)
@@ -24,37 +24,25 @@ export default function Tasks(props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 "task": task,
+                "complited": false,
                 "project": project.id
+                
             })
         };
-        fetch('http://127.0.0.1:8000/api/v1/add-task/', requestOptions);
+        fetch('http://127.0.0.1:8000/api/v1/tasks/', requestOptions);
     }
-
-    // const [projectTask, setprojectTask] = useState([]);
-
-    // useEffect(() => {
-    //     const getprojectTask = async () => {
-    //         const response = await fetch("http://127.0.0.1:8000/api/v1/tasks/");
-    //         const jsonResponse = await response.json();
-    //         console.log(jsonResponse);
-    //         setprojectTask(jsonResponse)
-    //     };
-    //     getprojectTask();
-    // }, []);
 
     const [complited, setcomplited] = useState([]);
 
-    
     const taskUpdateForm = () => {
         const requestOptions = {
-            method: 'POST',
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                "comlited": complited,
-                "id": project.tasks.id
+                "complited": complited
             })
         };
-        fetch('http://127.0.0.1:8000/api/v1/update-task/', requestOptions);
+        // fetch('http://127.0.0.1:8000/api/v1/tasks/ + task.id', requestOptions);
     }
 
     return (

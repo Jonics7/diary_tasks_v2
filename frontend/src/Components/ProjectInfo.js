@@ -8,7 +8,7 @@ export default function ProjectInfo(props) {
 
     useEffect(() => {
         const getProject = async () => {
-            const response = await fetch("http://127.0.0.1:8000/api/v1/project/" + props.urlID);
+            const response = await fetch("http://127.0.0.1:8000/api/v1/projects/" + props.urlID);
             const jsonResponse = await response.json();
             console.log(jsonResponse);
             setProject(jsonResponse)

@@ -35,7 +35,7 @@ class Project(models.Model):
     description = models.CharField('Описание проекта', max_length=150, blank=True)
     pub_date = models.DateTimeField('Дата публикации', null=True, auto_now_add=True, auto_now=False)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL, null=True)
-    upload = models.FileField('Готовый проект', upload_to='CompletedProjects/', blank=True,)
+    upload = models.FileField('Готовый проект', upload_to='CompletedProjects/', blank=True, null=True)
     language = models.ForeignKey(Language, verbose_name='Используемый язык', on_delete=models.SET_NULL, null=True)
     objects = models.Manager()
 
@@ -51,7 +51,7 @@ class Project(models.Model):
 
 class Task(models.Model):
     task = models.CharField('Техническое задание', max_length=150)
-    project = models.ForeignKey(Project, verbose_name='Проект', on_delete=models.SET_NULL, null=True, related_name="tasks")
+    project = models.ForeignKey(Project, verbose_name='Проект', on_delete=models.SET_NULL, null=True, blank=True, related_name="tasks")
     complited = models.BooleanField('Статус выполнения', default=False)
     objects = models.Manager()
 
