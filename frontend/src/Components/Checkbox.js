@@ -15,7 +15,7 @@ export default function Checkbox({ id, task, complited }) {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                "complited": checked
+                "complited": !checked
             })
         };
         fetch('http://127.0.0.1:8000/api/v1/tasks/' + id, requestOptions);
@@ -26,8 +26,7 @@ export default function Checkbox({ id, task, complited }) {
             method: 'DELETE'
         };
         fetch('http://127.0.0.1:8000/api/v1/tasks/' + id, requestOptions);
-    };
-
+    }
     return (
         <li className={cls.join(' ')}>
             <label className="task-text">
@@ -37,8 +36,9 @@ export default function Checkbox({ id, task, complited }) {
                     defaultChecked={checked}
                     onChange={(event) => {
                         setChecked(event.target.checked)
+            
                     }}
-                    onClick={taskUpdateForm()}
+                    onClick={() => taskUpdateForm()}
                 />
             </label>
             <span>{task}</span>
