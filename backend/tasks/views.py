@@ -53,3 +53,12 @@ class ProjectScriptsListViewSet(viewsets.ModelViewSet):
 class ProjectAnotherListViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.filter(category_id=4)
     serializer_class = ProjectListSerializer
+
+
+class ProjectTaskView(APIView):
+
+    def get(self, request, pk):
+        p = Project.objects.get(id=pk)
+        tasks = Task.objects.filter(project=p.id)
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)

@@ -2,14 +2,8 @@ from rest_framework import serializers
 
 from .models import Project, Category, Language, Task
 
-# class AddTaskSerializer(serializers.ModelSerializer):
-#     """Serializer for POST request(Add Task)"""
 
-#     class Meta:
-#         model = Task
-#         fields = ("task", "project", "complited", "id", )
 class TaskSerializer(serializers.ModelSerializer):
-    """Serializer for POST request(Add Project)"""
 
 
     class Meta:
@@ -22,7 +16,6 @@ class ProjectListSerializer(serializers.ModelSerializer):
     """Project List"""
     category = serializers.SlugRelatedField(slug_field="title", read_only=True)
     language = serializers.SlugRelatedField(slug_field="name", read_only=True)
-    tasks = TaskSerializer(many=True, read_only=True)
 
 
     class Meta:

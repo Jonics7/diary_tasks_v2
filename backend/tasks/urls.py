@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .views import ProjectTaskView
 
 #------------------------------------------------------------------------------
 projects_list = views.ProjectViewSet.as_view({
@@ -61,6 +62,7 @@ urlpatterns = [
     path('projects/game/', projects_game_list, name="projects_game_list"),
     path('projects/scripts/', projects_scripts_list, name="projects_scripts_list"),
     path('projects/another/', projects_another_list, name="projects_another_list"),
+    path('projects/<int:pk>/tasks', ProjectTaskView.as_view(), name='projects-detail'),
 
     path('tasks/', task, name='task-list'),
     path('tasks/<int:pk>', task_detail, name='task-detail'),
@@ -68,19 +70,3 @@ urlpatterns = [
     path('categories/', category_list, name='category-list'),
     path('languages/', language_list, name="language-list"),
 ]
-
-
-# urlpatterns = [
-#     path('projects/', views.ProjectListView.as_view()),
-#     path('projects/web/', views.ProjectWebListView.as_view()),
-#     path('projects/game/', views.ProjectGameListView.as_view()),
-#     path('projects/scripts/', views.ProjectScriptsListView.as_view()),
-#     path('projects/another/', views.ProjectAnotherListView.as_view()),
-#     path('project/<int:pk>/', views.ProjectDetailView.as_view()),
-#     path('languages/', views.LanguageListView.as_view()),
-#     path('categories/', views.CategoryListView.as_view()),
-#     path('add-project/', views.AddProjectView.as_view()),
-#     path('add-task/', views.AddTaskView.as_view()),
-#     path('update-task/', views.TaskUpdateView.as_view()),
-#     path('tasks/', views.TaskListView.as_view()),
-# ]

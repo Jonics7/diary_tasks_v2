@@ -4,11 +4,52 @@
 
 .add-task-form
     display: flex
+    justify-content: center
+    flex-direction: column
+    text-align: center
+    margin-top: 5em
+    width: 35%
+    margin-left: 20%
 
-.add-task
+.add-task-button
+    // text-align: center
+    border: 1px solid #2196f3
+    margin-top: 1.5em
+    width: 50%
+    margin-left: 25%
+    height: 4vh
+    background-color: #222226
+    color: #2196f3
 
+.add-task-button:focus
+    outline: none
 
+.add-task-button:hover
+    cursor: pointer
+    box-shadow: 0 0 10px #2196f3, 0 0 10px #2196f3
 
+.task
+    &-input
+        text-align: center
+        justify-content: center
+        color: white
+        background-color: black
+        opacity: 0.5
+        border: none
+        height: 2.75vh
+
+    &-list
+        display: flex
+        margin-left: 10vw
+        margin-top: 2.5vh
+        height: 7vh
+        align-items: center
+    &-text
+        color: white
+        width: 35vw
+    &-checkbox
+        
+        
 
 .add-task:focus, .task-input:focus
     outline: none

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Tasks.sass';
 import { Form, Field } from 'react-final-form';
+import Checkbox from './Checkbox';
+import TasksList from './TasksList';
+
 
 export default function Tasks(props) {
 
-    const [project, setProject] = useState([]);
+    const [project, setProject] = useState({});
 
     useEffect(() => {
         const getProject = async () => {
@@ -26,51 +29,32 @@ export default function Tasks(props) {
                 "task": task,
                 "complited": false,
                 "project": project.id
-                
+
             })
         };
         fetch('http://127.0.0.1:8000/api/v1/tasks/', requestOptions);
     }
 
-    const [complited, setcomplited] = useState([]);
+    const [projectTasks, setProjectTasks] = useState([]);
 
-    const taskUpdateForm = () => {
-        const requestOptions = {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                "complited": complited
-            })
+    useEffect(() => {
+        const getProjectTasks = async () => {
+            const response = await fetch("http://127.0.0.1:8000/api/v1/projects/" + props.urlID + "/tasks");
+            const jsonResponse = await response.json();
+            console.log(jsonResponse);
+            setProjectTasks(jsonResponse)
         };
-        // fetch('http://127.0.0.1:8000/api/v1/tasks/ + task.id', requestOptions);
-    }
+        getProjectTasks();
+    }, []);
 
+    
+
+    
+    
     return (
         <div className="tasks">
-
+            <div className="task-list"><TasksList tasks={projectTasks} /></div>
             
-
-            {/* {
-                project.tasks.map((task, index) => {
-                    return  <div>
-                                <label
-                                    key={`${index} `}
-                                    for={task.id}
-                                >
-                                    {task.task}
-                                </label>
-                                <input
-                                    type="checkbox"
-                                    id={task.id}
-                                    defaultChecked={task.complited}
-                                    // onChange={e => setTask(e.target.checked)}
-                                    // onClick={taskUpdateForm}
-                                />
-                            </div>
-                })
-            } */}
-
-
             <Form onSubmit={() => { }}>
                 {({ handleSubmit }) => (
                     <form
@@ -86,7 +70,7 @@ export default function Tasks(props) {
                             defaultValue={task}
                         />
                         <button
-                            className="add-task"
+                            className="add-task-button"
                             onClick={sendForm}
                         >
                             ADD NEW TASK
