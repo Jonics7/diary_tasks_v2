@@ -41,7 +41,7 @@ task_detail = views.TaskViewSet.as_view({
     "get": "retrieve",
     "put": "update",
     "patch": "partial_update",
-    "detele": "destroy"
+    "delete": "destroy"
 })
 #------------------------------------------------------------------------------
 category_list = views.CategoryListViewSet.as_view({

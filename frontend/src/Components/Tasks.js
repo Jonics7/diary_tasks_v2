@@ -46,17 +46,13 @@ export default function Tasks(props) {
         };
         getProjectTasks();
     }, []);
-
-    
-
-    
     
     return (
         <div className="tasks">
             <div className="task-list"><TasksList tasks={projectTasks} /></div>
             
-            <Form onSubmit={() => { }}>
-                {({ handleSubmit }) => (
+            <Form onSubmit={() => {}}>
+                {() => (
                     <form
                         className="add-task-form"
                     >

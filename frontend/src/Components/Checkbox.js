@@ -4,7 +4,13 @@ export default function Checkbox({ id, task, complited }) {
 
     const [checked, setChecked] = useState(complited);
 
-    const taskUpdateForm = (taskID) => {
+    const cls = ['task1'];
+
+    if (checked) {
+        cls.push('complited')
+    };
+
+    const taskUpdateForm = () => {
         const requestOptions = {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -12,11 +18,18 @@ export default function Checkbox({ id, task, complited }) {
                 "complited": checked
             })
         };
-        fetch('http://127.0.0.1:8000/api/v1/tasks/' + taskID, requestOptions);
-    }
+        fetch('http://127.0.0.1:8000/api/v1/tasks/' + id, requestOptions);
+    };
     
+    const taskDelete = () => {
+        const requestOptions = {
+            method: 'DELETE'
+        };
+        fetch('http://127.0.0.1:8000/api/v1/tasks/' + id, requestOptions);
+    };
+
     return (
-        <div>
+        <li className={cls.join(' ')}>
             <label className="task-text">
                 <input
                     className="task-checkbox"
@@ -25,11 +38,12 @@ export default function Checkbox({ id, task, complited }) {
                     onChange={(event) => {
                         setChecked(event.target.checked)
                     }}
-                    onClick={taskUpdateForm(id)}
+                    onClick={taskUpdateForm()}
                 />
-                <span>{task}</span>
             </label>
+            <span>{task}</span>
 
-        </div>
+            <button onClick={taskDelete}>Remove</button>
+        </li>
     )
 }
