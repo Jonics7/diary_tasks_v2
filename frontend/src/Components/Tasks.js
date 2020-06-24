@@ -67,7 +67,7 @@ export default function Tasks(props) {
                         />
                         <button
                             className="add-task-button"
-                            onClick={sendForm}
+                            onClick={() => sendForm()}
                         >
                             ADD NEW TASK
                         </button>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Bin from './bin.png'
 
 export default function Checkbox({ id, task, complited }) {
 
@@ -43,7 +44,23 @@ export default function Checkbox({ id, task, complited }) {
             </label>
             <span>{task}</span>
 
-            <button onClick={taskDelete}>Remove</button>
+            <i
+                onClick={taskDelete}
+                class="material-icons btn-delete"
+            >
+                delete
+            </i>
+
+            {/* <button
+                onClick={taskDelete}
+                className="btn-delete"
+            >
+                <img
+                    src={Bin}
+                    alt="bin"
+                    className="bin"
+                />
+            </button> */}
         </li>
     )
 }
